@@ -1,14 +1,31 @@
-diff --git a/third_party/aws/BUILD.bazel b/third_party/aws/BUILD.bazel
-index d9e40703caa..ef7c6f111c2 100644
---- a/third_party/aws/BUILD.bazel
-+++ b/third_party/aws/BUILD.bazel
-@@ -30,6 +30,9 @@ cc_library(
-         "@org_tensorflow//tensorflow:freebsd": glob([
-             "aws-cpp-sdk-core/source/platform/linux-shared/*.cpp",
-         ]),
-+        "@org_tensorflow//tensorflow:linux_s390x": glob([
-+            "aws-cpp-sdk-core/source/platform/linux-shared/*.cpp",
-+        ]),
-         "//conditions:default": [],
-     }) + select({
-         "//conditions:default": glob([
+diff --git a/tensorflow/distribute/experimental/rpc/kernels/BUILD b/tensorflow/distribute/experimental/rpc/kernels/BUILD
+index 9f92501443b..05c81fb5703 100644
+--- a/tensorflow/distribute/experimental/rpc/kernels/BUILD
++++ b/tensorflow/distribute/experimental/rpc/kernels/BUILD
+@@ -17,7 +17,7 @@ cc_library(
+     deps = [
+         "//tensorflow/distribute/experimental/rpc/proto:tf_rpc_service_proto_cc",
+         "//tensorflow/stream_executor/platform",
+-        "@com_github_grpc_grpc//:grpc++",
++        "//tensorflow:grpc++",
+     ],
+     alwayslink = 1,
+ )
+@@ -26,7 +26,7 @@ cc_library(
+     name = "grpc_credentials",
+     hdrs = ["grpc_credentials.h"],
+     deps = [
+-        "@com_github_grpc_grpc//:grpc++",
++        "//tensorflow:grpc++",
+     ] + grpc_credentials_dependency(),
+ )
+
+@@ -47,7 +47,7 @@ tf_kernel_library(
+         "//tensorflow/core/distributed_runtime/rpc:grpc_util",
+         "//tensorflow/distribute/experimental/rpc/proto:tf_rpc_service_proto_cc",
+         "//tensorflow/stream_executor/platform",
+-        "@com_github_grpc_grpc//:grpc++",
++        "//tensorflow:grpc++",
+         "@com_google_absl//absl/strings",
+         "@com_google_absl//absl/strings:str_format",
+     ],
